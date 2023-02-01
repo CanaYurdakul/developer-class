@@ -1,0 +1,16 @@
+select id, name, phone from Account
+
+SELECT id, name, Project_Name__c, Status__c, Description__c from Salesforce_Project__c
+
+select id, name, mailingcity from contact where mailingcity = '' 
+SELECT Id, Name, Industry FROM Account where Industry = 'Energy' limit 1
+
+SELECT Id, Name, Industry,phone from account where phone !=''
+
+select id, name, industry, phone, accountnumber, AnnualRevenue from account where AnnualRevenue >100000 and AnnualRevenue < 50000000
+
+select id, name, industry, phone, accountnumber, AnnualRevenue from account where createddate > last_week
+
+select id, name, mailingcity from contact where mailingcity = 'Paris' or mailingcity = 'burlington' or mailingcity = 'Lawrence'
+//ORRRRRR//
+select id, name, mailingcity from contact where mailingcity in ('Paris', 'burlington','Lawrence')
