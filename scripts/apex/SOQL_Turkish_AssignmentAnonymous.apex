@@ -1,0 +1,1 @@
+SOQL_Turkish_Assignment.accountSOQL();
