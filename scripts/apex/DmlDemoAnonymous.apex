@@ -8,3 +8,5 @@ DmlDemo.dmlUpdateDemo_stndObj2();
 DmlDemo.dmlUpdateDemo_stndObj1();
 DmlDemo.dmlDemoInsert_cstmObj();
 DmlDemo.dmlDemoInsert_stndObj1();
+
+delete [select id from account where createdDate = TODAY limit 70];
