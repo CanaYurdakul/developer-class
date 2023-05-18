@@ -1,4 +1,4 @@
-  public class CalculatorAgain {
+public class CalculatorAgain {
         //parameterless method
         public void publicMessage(){
            system.debug('public method called');
@@ -53,5 +53,6 @@
            boolean lp = date.isLeapYear(year);
            //lp = false;
            return lp;
-       }     
+       }
+      
    }

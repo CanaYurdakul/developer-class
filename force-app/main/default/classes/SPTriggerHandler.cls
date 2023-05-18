@@ -1,15 +1,36 @@
 public class SPTriggerHandler {
     public static void createDefaultTicket(List<salesforce_project__c> spTriggerNew) {
-        List<Salesforce_Ticket__c> newST = new List<Salesforce_Ticket__c>();
-        for (Salesforce_Project__c eachSP : spTriggerNew) {
-            Salesforce_Ticket__c st = new Salesforce_Ticket__c();
-            st.Subject__c = 'Default ST';
-            st.Salesforce_Project__c = eachSP.Id;
-            newST.add(st);    
+        try{
+            //DefaultTicketInfo__c dtInfo = DefaultTicketInfo__c.getOrgDefaults();
+            DefaultTicketInfo__c dtInfo; 
+            Profile adminProfile = [SELECT id, name FROM profile WHERE name = 'System Administrator'];
+            if (UserInfo.getProfileId() == adminProfile.Id) {
+                dtInfo = DefaultTicketInfo__c.getInstance(adminProfile.Id);        
+            }else {
+                dtInfo = DefaultTicketInfo__c.getOrgDefaults();
+            }
+
+            List<Salesforce_Ticket__c> newST = new List<Salesforce_Ticket__c>();
+            for (Salesforce_Project__c eachSP : spTriggerNew) {
+               Salesforce_Ticket__c st = new Salesforce_Ticket__c();
+               st.Subject__c = dtInfo.Subject__c;
+               st.Salesforce_Project__c = eachSP.Id;
+               st.Priority__c = 'High';
+               st.Description__c = dtInfo.Description__c;
+               newST.add(st);    
+            }
+            if (!newST.isEmpty()) {
+               insert newST;   
+            }      
+        }catch(Exception ex){
+            string errorMessage = system.label.SPTriggerError;
+            for(Salesforce_Project__c eachSP : spTriggerNew){
+                eachSP.addError(errorMessage);
+                //('Error in creating default ticket. Please contact your administrator, NOT developer');
+            }
+
         }
-        if (!newST.isEmpty()) {
-            insert newST;   
-        }      
+        
     }
     public static void validateStatusCompletion(List<Salesforce_Project__c> spTriggerNew, List<Salesforce_Project__c> spTriggerOld, Map<id, Salesforce_Project__c> spTriggerNewMap, Map<id, Salesforce_Project__c> spTriggerOldMap) {
           Set<id> spIds = new Set<id>();
@@ -35,5 +56,26 @@ public class SPTriggerHandler {
             eachSP.Description__c = 'Updated from future';
         }
         update listSP;
-    }    
+    }
+    public static void projectStatusChange(List<Salesforce_Project__c> spTriggerNew, List<Salesforce_Project__c> spTriggerOld, Map<id, Salesforce_Project__c> spTriggerNewMap, Map<id, Salesforce_Project__c> spTriggerOldMap) {
+
+        Set<id> projectIds = new Set<id>();
+        for (Salesforce_Project__c eachSP : spTriggerNew) {
+            if (eachSP.Status__c =='completed' && eachSP.Status__c != spTriggerOldMap.get(eachSP.Id).Status__c) {
+                projectIds.ADD(eachSP.Id);        
+            }        
+        }
+        if (!projectIds.isEmpty()) {
+            updateTicketStatus(projectIds);
+        }       
+    }  
+    @testVisible 
+    @future
+    private static void updateTicketStatus(set<id> spIds) {
+        List<Salesforce_Ticket__c> listST = [SELECT id, status__c, Salesforce_Project__c FROM Salesforce_Ticket__c WHERE Salesforce_Project__c IN :spIds AND status__c != 'Completed'];
+        for (Salesforce_Ticket__c st : listST) {
+            st.status__c ='Completed';        
+        }
+        update listST;      
+    } 
 }

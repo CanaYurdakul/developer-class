@@ -17,3 +17,5 @@ system.debug('Perimeter of rectangle is ==> ' + pm1);
 
 
 
+RestCallouts.getCaseInfo();
+

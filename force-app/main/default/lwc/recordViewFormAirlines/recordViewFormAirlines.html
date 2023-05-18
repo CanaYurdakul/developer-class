@@ -1,0 +1,22 @@
+<template>
+   <lightning-card title="Airlines Form - View" icon-name="custom:custom20">
+    <div class="slds-var-m-around_medium">
+        <lightning-record-view-form
+            object-api-name={objectName}
+            record-id={recordId}>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-output-field field-name={fields.name}></lightning-output-field>
+                    <lightning-output-field field-name={fields.slogan}></lightning-output-field>
+                    <lightning-output-field field-name={fields.website}></lightning-output-field>
+                </div>
+                <div class="slds-col">
+                    <lightning-output-field field-name={fields.country}></lightning-output-field>
+                    <lightning-output-field field-name={fields.headQuart}></lightning-output-field>
+                    <lightning-output-field field-name={fields.established}></lightning-output-field>
+                </div>
+            </div>
+        </lightning-record-view-form>
+    </div>
+   </lightning-card>
+</template>

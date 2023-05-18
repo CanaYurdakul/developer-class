@@ -128,4 +128,48 @@ public class AccountTriggerHandlerTest {
             assert.areEqual(true, eachContact.vip__c);
         }
     }
+    @isTest 
+    private static void testupdateMailingCity() {
+        Account acc = new account();
+        acc.Name = 'test 1';
+        acc.Industry = 'Energy';
+
+        Account acc2 = new account();
+        acc2.Name = 'test 2';
+        acc2.Industry = 'Energy';
+
+        Account acc3 = new account();
+        acc3.Name = 'test 3';
+        acc3.Industry = 'Banking';
+
+        list<account> listAcc = new list<account>{acc, acc2, acc3};
+        insert listAcc;
+        
+        List<contact> listCon = new list<contact>();
+        for (Integer i = 0; i < 300; i++) {
+
+            contact c = new contact();
+            c.LastName = 'Testing ' + i;
+
+            if (i < 100) {
+                c.accountId = listAcc[0].id;
+            } else if(i < 200){
+                c.AccountId = listAcc[1].id;
+            } else {
+                c.AccountId = listAcc[2].id;
+            }
+            listCon.add(c);
+        }
+        insert listCon;
+
+        for (account eachAccount : listAcc) {
+            eachAccount.BillingCity = 'Kitchener';
+        }
+        update listAcc;
+        
+        list<contact> allContacts = [select id, accountid, MailingCity from Contact];
+        for (contact eachContact : allContacts) {
+            assert.areEqual('Kitchener', eachContact.MailingCity);
+        }        
+    }
 }

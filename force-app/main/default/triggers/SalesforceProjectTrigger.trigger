@@ -1,4 +1,10 @@
 trigger SalesforceProjectTrigger on Salesforce_Project__c (before insert, before update, after insert, after update ){
+
+  TriggerSwitch__mdt ts = TriggerSwitch__mdt.getInstance('salesforce_project_c');
+  if (!ts.enabled__c) {
+    return;    
+  }
+
     if(Trigger.isAfter && Trigger.isInsert){
       system.debug('call method now...');
       SPTriggerHandler.updateProjectDescription(trigger.newMap.keySet());
@@ -6,7 +12,10 @@ trigger SalesforceProjectTrigger on Salesforce_Project__c (before insert, before
        SPTriggerHandler.createDefaultTicket(Trigger.new);
     }
     if (Trigger.isBefore && Trigger.isUpdate) {
-       SPTriggerHandler.validateStatusCompletion(trigger.new, trigger.old, trigger.newMap, trigger.oldMap);    
+      system.debug('before update project called');
+      // SPTriggerHandler.validateStatusCompletion(trigger.new, trigger.old, trigger.newMap, trigger.oldMap);    
     }
-   
+    if (Trigger.isAfter && Trigger.isUpdate) {
+      SPTriggerHandler.projectStatusChange(trigger.new, trigger.old, trigger.newMap, trigger.oldMap);    
+    }  
 }

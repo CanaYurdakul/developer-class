@@ -22,6 +22,5 @@ public class Collections {
             outPutMonth = 'Not a Valid Month!';
         }
         return outPutMonth;
-
     }
 }

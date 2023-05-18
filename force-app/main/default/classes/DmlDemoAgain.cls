@@ -1,4 +1,3 @@
-
 public class DmlDemoAgain {
     public static void dmlDemoInsert_stndObj1() {
         //1. create new instance

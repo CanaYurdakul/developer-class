@@ -1,0 +1,16 @@
+<template>
+   <lightning-card title="Stage Name Picklist" icon-name="action:priority">
+    <div class="slds-var-m-around_medium">
+        <lightning-combobox
+             label="Select Stage Name"
+             value={selectedStageName}
+             options={stageNameOptions}
+             onchange={changeHandler}>
+            </lightning-combobox>
+            <div class="slds-var-m-top_small slds-text-color_success">
+                Selected Stage Name: 
+                <span class="slds-text-color_error">{selectedStageName}</span>
+            </div>
+    </div>
+   </lightning-card>
+</template>

@@ -2,11 +2,8 @@
 public  class DmlDemoAgainTest {
     @isTest 
     private static void testInsertStndObj() {
-        //SOQL ===> CANNOT fetch or get ANY records from ORG in TEST CLASS
-        //DML ===> will NOT insert/update ANY record in ORG in TEST CLASS
-        // call the method
+
         DmlDemoAgain.dmlDemoInsert_stndObj1();
-        // to verify if it working or not we do SOQL 
         List<account> accs = [SELECT id, name FROM account WHERE name = 'Softinnovas'];
         system.assertEquals(1, accs.size());   
         system.assertEquals('Softinnovas', accs[0].Name); 

@@ -22,7 +22,7 @@ public class PrimitiveDataTypeDemo {
         system.debug('obj 2 is ' + obj2);
         system.debug('obj 3 is ' + obj3);
 
-        ID recordId='001Dn00000B9NLfIAN';
+        ID recordId ='001Dn00000B9NLfIAN';
         system.debug('record id is ' + recordId);
     }
 }

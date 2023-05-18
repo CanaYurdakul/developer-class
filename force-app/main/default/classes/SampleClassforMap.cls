@@ -9,17 +9,18 @@ public class SampleClassforMap {
             //get account id of this contact
             Id accountId = contactItem.accountId;
             //create new TEMP list of contacts
-            List<contact> cntTempList = new List<contact>();
-           //check if map has existing list<contact> for 'AccountId'
-           if (mapAccIdToContact.get(accountId) != null) {
+        List<contact> cntTempList = new List<contact>();
+        //check if map has existing list<contact> for 'AccountId'
+        if (mapAccIdToContact.get(accountId) != null) {
             //if yes then set that list<contact> to 'cntTempList'
-              cntTempList = mapAccIdToContact.get(accountId);
-    }
+            cntTempList = mapAccIdToContact.get(accountId);
+        }
         //now add the current contact(contactItem) in the cntTempList
         cntTempList.add(contactItem);
         //now put the current contact(contactItem) in the cntTempList
         mapAccIdToContact.put(accountId, cntTempList); 
-    }    
+        }    
         system.debug ('The final map is ==> ' + mapAccIdToContact);  
-    }     
+    }  
+    
 }

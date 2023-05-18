@@ -3,5 +3,7 @@
     "**/node_modules": true,
     "**/bower_components": true,
     "**/.sfdx": true
-  }
+  },
+  "editor.fontSize": 11,
+  "salesforcedx-vscode-core.show-cli-success-msg": false
 }

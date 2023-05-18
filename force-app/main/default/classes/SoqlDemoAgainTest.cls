@@ -84,5 +84,4 @@ public class SoqlDemoAgainTest {
 
         SoqlDemoAgain.parentToChild_SOQL1();
    }
-
 }
